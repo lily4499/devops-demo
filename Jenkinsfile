@@ -33,35 +33,8 @@ pipeline {
                 sh 'kubectl expose deployment devops-demo --type=NodePort --port=80 --target-port=3000 || echo "Service exists"'
             }
         }
-
-        stage('Port Forward to Access App') {
-            steps {
-                script {
-                    sh '''
-                        echo "Starting port-forward in background..."
-                        kubectl port-forward deployment/devops-demo 8080:3000 >/dev/null 2>&1 &
-                        echo $! > port_forward_pid.txt
-                        sleep 5
-                        echo "✅ App is now accessible at: http://localhost:8080"
-                    '''
-                }
-            }
-        }
     }
 
-    // post {
-    //     always {
-    //         script {
-    //             sh '''
-    //                 if [ -f port_forward_pid.txt ]; then
-    //                     kill $(cat port_forward_pid.txt) || true
-    //                     rm port_forward_pid.txt
-    //                     echo "🛑 Port-forward process stopped."
-    //                 fi
-    //             '''
-    //         }
-    //     }
-    // }
 }
 
 
