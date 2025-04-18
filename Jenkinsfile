@@ -30,7 +30,11 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl set image deployment/devops-demo devops-demo=$IMAGE_NAME || kubectl create deployment devops-demo --image=$IMAGE_NAME'
-                sh 'kubectl expose deployment devops-demo --type=LoadBalancer --port=80 --target-port=3000 || echo "Service exists"'
+                sh 'kubectl expose deployment devops-demo --type=NodePort --port=80 --target-port=3000 || echo "Service exists"'
+                sh '''
+                    echo "Accessing Service..."
+                    minikube service devops-demo --url
+                '''
             }
         }
     }
