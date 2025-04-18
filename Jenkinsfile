@@ -49,19 +49,19 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            script {
-                sh '''
-                    if [ -f port_forward_pid.txt ]; then
-                        kill $(cat port_forward_pid.txt) || true
-                        rm port_forward_pid.txt
-                        echo "🛑 Port-forward process stopped."
-                    fi
-                '''
-            }
-        }
-    }
+    // post {
+    //     always {
+    //         script {
+    //             sh '''
+    //                 if [ -f port_forward_pid.txt ]; then
+    //                     kill $(cat port_forward_pid.txt) || true
+    //                     rm port_forward_pid.txt
+    //                     echo "🛑 Port-forward process stopped."
+    //                 fi
+    //             '''
+    //         }
+    //     }
+    // }
 }
 
 
